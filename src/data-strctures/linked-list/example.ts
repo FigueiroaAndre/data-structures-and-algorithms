@@ -22,7 +22,7 @@ console.log('\nADD 9 IN THE INDEX 1 OF THE LINKED LIST');
 list.add(9, 1);
 console.log(list.toArray());
 
-console.log('\nCLEAR THE LINT');
+console.log('\nCLEAR THE LIST');
 list.clear();
 console.log(list.toArray());
 
