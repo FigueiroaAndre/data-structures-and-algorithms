@@ -4,7 +4,6 @@
   "description": "Data Structures and Algorithms implemented on Typescript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "Data",
