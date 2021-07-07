@@ -1,6 +1,6 @@
 import Stack from "./Stack";
 
-function matchSymbols(open: string, close: string) {
+function matchSymbols(open: string, close: string): boolean {
     return open === '[' && close === ']'
         || open === '{' && close === '}'
         || open === '(' && close === ')';
