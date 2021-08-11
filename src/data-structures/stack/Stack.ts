@@ -1,72 +1,38 @@
+import LinkedList from "../linked-list/LinkedList";
+
 export interface IStack<T> {
     clear: () => void;
     size: () => number;
     push: (value: T) => void;
     pop: () => T;
-    indexOf: (value: T) => number;
-}
-
-class Node<T> {
-    value: T;
-    previous: Node<T> | null;
-
-    constructor(value: T, previousNode: Node<T> = null) {
-        this.value = value;
-        this.previous = previousNode;
-    }
+    contains: (value: T) => boolean;
 }
 
 export default class Stack<T> implements IStack<T> {
-    private length: number;
-    private top: Node<T> | null;
+    private linkedList:  LinkedList<T>;
 
     constructor() {
-        this.length = 0;
-        this.top = null;
+        this.linkedList = new LinkedList<T>();
     }
 
     clear(): void {
-        while(this.length !== 0) {
-            this.pop();
-        }
+        this.linkedList.clear();
     }
 
     size(): number {
-        return this.length;
+        return this.linkedList.size();
     }
 
     push(value: T): void {
-        let newNode = new Node<T>(value, this.top);
-        this.top = newNode;
-        this.length++;
+        this.linkedList.addLast(value);
     }
 
     pop(): T {
-        if (this.length === 0) {
-            throw new RangeError('The stack is empty.');
-        }
-
-        let value = this.top.value;
-        let nextTop = this.top.previous;
-        this.top.previous = null;
-        this.top = nextTop;
-        this.length--;
-
+        let value = this.linkedList.removeLast();
         return value;
     }
 
-    indexOf(value: T): number {
-        let selectedNode = this.top;
-        let index = -1;
-
-        for(let i = 0; i < this.length; i++) {
-            if (selectedNode.value == value) {
-                index = i;
-                break;
-            }
-            selectedNode = selectedNode.previous;
-        }
-
-        return index;
+    contains(value: T): boolean {
+        return this.linkedList.contains(value);
     }
 }
