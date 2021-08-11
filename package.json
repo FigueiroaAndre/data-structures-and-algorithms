@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Data Structures and Algorithms implemented on Typescript",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [
     "Data",
     "Structure",
