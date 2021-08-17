@@ -5,7 +5,7 @@ export interface IPriorityQueue<T> {
     size: () => number;
     add: (value: T) => void;
     poll: () => T;
-    // remove: (value: T) => void;
+    remove: (value: T) => void;
 }
 
 function defaultComparisonFunction<T>(value1: T, value2: T) {
@@ -48,6 +48,29 @@ export default class PriorityQueue<T> implements IPriorityQueue<T> {
         this.bubbleDown(0);
 
         return polledValue;
+    }
+    
+    remove(value: T): void {
+        let currentIndex = this.heapArray.findIndex(heapElement => heapElement === value);
+
+        if (currentIndex === -1) {
+            throw new RangeError(`${value} is not in the priority queue.`);
+        }
+
+        if (this.size() === 0 || this.size() === 1) {
+            this.poll();
+            return;
+        }
+
+        this.swapElements(currentIndex, this.size() -1);
+        this.heapArray.pop();
+
+        if (currentIndex === 0) this.bubbleDown(0);
+        else if (this.comparisonFunction(this.heapArray[currentIndex], this.heapArray[this.getParentIndex(currentIndex)])) {
+            this.bubbleUp(currentIndex);
+        } else {
+            this.bubbleDown(currentIndex);
+        }
     }
 
     out(): void {
@@ -94,8 +117,11 @@ export default class PriorityQueue<T> implements IPriorityQueue<T> {
         let rightChildValue = this.heapArray[rightChildIndex];
 
         if (hasRightChild) {
-            let prioritizedChildIndex = this.comparisonFunction(rightChildValue, leftChildValue)
-                ? rightChildIndex : leftChildIndex;
+            let prioritizedChildIndex;
+            if (rightChildValue === leftChildValue) prioritizedChildIndex = leftChildIndex;
+            else {
+                prioritizedChildIndex = this.comparisonFunction(rightChildValue, leftChildValue) ? rightChildIndex : leftChildIndex;
+            }
             let prioritizedChildValue = this.heapArray[prioritizedChildIndex];
 
             if (this.comparisonFunction(prioritizedChildValue, selectedValue)) {
